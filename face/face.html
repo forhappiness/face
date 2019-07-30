@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>AI换脸</title>
+
+
+    <link rel="stylesheet" href="../layer/mobile/need/layer.css">
+    <link rel="stylesheet" href="../css/slider.css">
+    <link rel="stylesheet" href="../css/face.css">
+
+
+
+</head>
+
+
+<body>
+<img src="" id="tempimage" alt="" style="display: none">
+
+<div class="content">
+    <div class="template">
+
+        <p class="step01">步骤一：点击“上传”按钮，上传清晰的无刘海面部照片</p>
+        <!--拍完之后预览的图片，安卓才会显示-->
+        <img src="" class="photoImg" style="display: none" alt="">
+
+        <!--本地上传照片控件-->
+        <div id="preview" style="text-align: center">
+            <img id="imghead" width='100%'  border='0' src=''>
+        </div>
+
+
+        <!--调出相机的按钮，安卓才会显示-->
+        <div class="btn_group">
+            <div class="upload_now">上传</div>
+            <div class="pai_now" style="display: none">拍照</div>
+        </div>
+
+        <input id="temp" type="file" onchange="selectFileImage(this)" style="display: none"/>
+
+
+
+    </div>
+    <p class="request_id"></p>
+    <p class="step02">步骤二：点击下方的某一张海报，选择海报里面进行AI换脸的具体明星</p>
+    <div class="tip_face"></div>
+    <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 800px; height: 456px; overflow: hidden; visibility: hidden;">
+        <!-- Loading Screen -->
+        <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
+            <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
+            <div style="position:absolute;display:block;background:url('') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
+        </div>
+        <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 800px; height: 356px; overflow: hidden;">
+
+
+            <div data-p="144.50" style="display: none;" class="postimages">
+                <img data-u="image" class="images" src="../img/post_temp.jpg" onclick="return false" />
+                <img data-u="thumb" src="../img/post_temp.jpg" />
+            </div>
+            <div data-p="144.50" style="display: none;" class="postimages">
+                <img data-u="image" class="images" src="../img/post_temp01.jpg" onclick="return false" />
+                <img data-u="thumb" src="../img/post_temp01.jpg" />
+            </div>
+            <div data-p="144.50" style="display: none;" class="postimages">
+                <img data-u="image" class="images" src="../img/post_temp03.jpg" onclick="return false"/>
+                <img data-u="thumb" src="../img/post_temp03.jpg" />
+            </div>
+            <div data-p="144.50" style="display: none;" class="postimages">
+                <img data-u="image" class="images" src="../img/post_temp04.png" onclick="return false"/>
+                <img data-u="thumb" src="../img/post_temp04.png" />
+            </div>
+
+            <div data-p="144.50" style="display: none;" class="postimages">
+                <img data-u="image" class="images" src="../img/post_temp08.jpg" onclick="return false"/>
+                <img data-u="thumb" src="../img/post_temp08.jpg" />
+            </div>
+            <div data-p="144.50" style="display: none;" class="postimages">
+                <img data-u="image" class="images" src="../img/post_temp10.jpg" onclick="return false"/>
+                <img data-u="thumb" src="../img/post_temp10.jpg" />
+            </div>
+            <div data-p="144.50" style="display: none;" class="postimages">
+                <img data-u="image" class="images" src="../img/post_temp11.jpg" onclick="return false"/>
+                <img data-u="thumb" src="../img/post_temp11.jpg" />
+            </div>
+
+        </div>
+        <!-- Thumbnail Navigator -->
+        <div data-u="thumbnavigator" class="jssort01" style="position:absolute;left:0px;bottom:0px;width:800px;height:100px;" data-autocenter="1">
+            <!-- Thumbnail Item Skin Begin -->
+            <div data-u="slides" style="cursor: default;">
+                <div data-u="prototype" class="p">
+                    <div class="w">
+                        <div data-u="thumbnailtemplate" class="t"></div>
+                    </div>
+                    <div class="c"></div>
+                </div>
+            </div>
+            <!-- Thumbnail Item Skin End -->
+        </div>
+        <!-- Arrow Navigator -->
+        <span data-u="arrowleft" class="jssora05l" style="top:158px;left:40px;width:40px;height:40px;"></span>
+        <span data-u="arrowright" class="jssora05r" style="top:158px;right:40px;width:40px;height:40px;"></span>
+
+    </div>
+
+    <!--生成按钮-->
+    <!--<div class="btn">-->
+        <!--<div class="compound_btn" >确认生成</div>-->
+    <!--</div>-->
+
+    <!--最终合成结果弹出层-->
+
+    <div class="res" style="display: none">
+        <!--<div class="shade"></div>-->
+        <div class="headTop">
+            <p>提示：长按换脸后的图片保存至本地</p>
+            <div class="result_back">返回</div>
+        </div>
+
+        <!--<p>合成结果 <span class="tips" style="display: none">(正在处理，请耐心等待！)</span> ：</p>-->
+        <img id="result" src="" alt="">
+
+    </div>
+
+</div>
+
+
+<!--合成前的海报预览-->
+<div class="post_view" style="display: none">
+    <!--<div class="shade post_shade"></div>-->
+    <div class="headTop">
+        <p class="view_tip">提示：点击海报中脸部的红框，选择要换脸的人物</p>
+        <div class="face_btn">
+            <div class="site_sure">确认融合</div>
+            <div class="site_rechose">取消</div>
+        </div>
+    </div>
+
+    <div class="change_site">
+        <!--<img src="../img/red_border.png" alt="" id="red_border" style="width: 80px;height:100px;position: absolute;top: 0%;left: 0">-->
+
+        <img src="" class="post_move" alt="">
+
+    </div>
+
+
+
+</div>
+
+
+
+
+<!--摄像头画面-->
+<div class="paizhao" id="paizhao" style="display: none;align-items: center;justify-content: center;">
+    <!--遮罩-->
+    <div class="bg_btn"></div>
+
+    <!--镜头实时画面-->
+    <video playsinline autoplay class="came" style="object-fit: fill;width: 100%;position: relative;z-index: 1"></video>
+
+    <canvas id="cava" style="display: none"></canvas>
+    <!--拍照按钮-->
+    <div class="pai_btn">
+        <!--镜头切换按钮-->
+        <div class="change"></div>
+
+        <div id="pai"></div>
+
+        <div class="back"></div>
+    </div>
+</div>
+
+
+
+<script src="../js/jquery-1.12.0.min.js"></script>
+<script src="../js/rem.js"></script>
+
+<!--拍照-->
+<script src="../js/html2canvas.min.js"></script>
+<script src="../js/mobile-detect.min.js"></script>
+
+<!--提示层-->
+<script src="../layer/layer.js"></script>
+
+<!--照片上传-->
+<script src="../js/imgload.js"></script>
+
+<!--拖动-->
+<script src="../js/touch.min.js"></script>
+<script src="../js/cat.touchjs.js"></script>
+
+<!--海报轮播图-->
+<script src="../js/jssor.slider.mini.js"></script>
+<script src="../js/slider.js"></script>
+
+<!--上传图片-->
+<script src="../js/exif.js"></script>
+<script src="../js/uploadImage.js"></script>
+
+<script src="../js/face.js"></script>
+</body>
+</html>

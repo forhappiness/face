@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>人脸融合</title>
+
+</head>
+<body>
+
+<div class="content">
+
+    <!--图片上传框1-->
+    <div class="template">
+        <p>1.上传模板照片</p>
+        <div id="preview" style="text-align: center">
+            <img id="imghead" width='100%' height='auto' border='0' src='../img/a1.png'>
+        </div>
+
+        <input id="temp" type="file" onchange="previewImage(this)" />
+    </div>
+
+    <!--图片上传框2-->
+    <div class="face">
+        <p>2.上传被融合的照片</p>
+
+        <!--调出相机的按钮,安卓才会显示-->
+        <div class="pai_now" style="display: none">直接拍</div>
+
+        <!--拍完之后预览的图片，安卓才会显示-->
+        <img src="" class="photoImg" style="display: none" alt="">
+
+        <!--本地上传-->
+        <div id="preview01" style="text-align: center">
+            <img id="imghead01" width=100% height=auto border=0 src='../img/a1.png'>
+        </div>
+        <input id="face" type="file" onchange="previewImage01(this)" />
+
+
+    </div>
+</div>
+
+<!--融合按钮-->
+<div class="btn">
+    <div class="button">融合</div>
+    <div class="res">
+        <p>融合结果：</p>
+        <img id="result" src="" alt="">
+    </div>
+
+</div>
+
+<!--摄像头画面-->
+<div class="paizhao" id="paizhao" style="display: none;align-items: center;justify-content: center;">
+    <div class="shade"></div>
+    <!--镜头切换按钮-->
+    <div class="change"><img src="../img/change.png" alt="" style="width: 100%"></div>
+    <video playsinline autoplay class="came" style="object-fit: fill;width: 100%;position: relative;z-index: 1"></video>
+
+    <canvas id="cava" style="display: none"></canvas>
+
+    <div id="pai">拍照</div>
+
+    <div class="back">返回</div>
+</div>
+
+
+
+
+<script src="../js/jquery-1.12.0.min.js"></script>
+<script src="../js/mobile-detect.min.js"></script>
+<script src="../js/face.js"></script>
+<script src="../js/imgload.js"></script>
+
+<script>
+    $(function () {
+        var img = "../img/a1.png";//imgurl 就是你的图片路径
+
+        function getBase64Image(img) {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+            var dataURL = canvas.toDataURL("image/"+ext);
+            return dataURL;
+        }
+
+        var image = new Image();
+        image.src = img;
+        image.onload = function(){
+            var base64 = getBase64Image(image);
+            console.log(base64);
+        }
+    })
+</script>
+
+</body>
+</html>
